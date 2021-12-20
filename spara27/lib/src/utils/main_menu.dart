@@ -26,7 +26,3 @@ List<Widget> contentWidgets = [
   const AhorroWidget(),
   const PerfilWidget()
 ];
-List<Movimiento> ejemploMovimientos = [
-  Movimiento(id: 1, monto: 50, descripcion: "asca"),
-  Movimiento(id: 2, monto: 70, descripcion: "assdca")
-];

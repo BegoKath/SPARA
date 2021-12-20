@@ -1,8 +1,8 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:spara27/src/models/movimiento_model.dart';
+import 'package:spara27/src/services/movimiento_service.dart';
 import 'package:spara27/src/widgets/movimientos_card.dart';
 
 class MovimientosWidget extends StatefulWidget {
@@ -14,11 +14,13 @@ class MovimientosWidget extends StatefulWidget {
 
 class _MovimientosWidgetState extends State<MovimientosWidget> {
   late DateTime _selectedDate;
+  final MovimientoService _ahorroService = MovimientoService();
   List<Movimiento>? _listaMovimientos;
   @override
   void initState() {
     super.initState();
     _resetSelectedDate();
+    _downloadMantenimientos();
   }
 
   void _resetSelectedDate() {
@@ -88,5 +90,12 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
             ),
           ],
         ));
+  }
+
+  _downloadMantenimientos() async {
+    _listaMovimientos = await _ahorroService.getAhorros();
+    if (mounted) {
+      setState(() {});
+    }
   }
 }
