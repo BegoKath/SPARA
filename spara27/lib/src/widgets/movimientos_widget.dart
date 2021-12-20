@@ -31,65 +31,21 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Container(
-        color: Theme.of(context).primaryColor,
-        width: size.width,
-        height: size.height,
-        child: Column(
-          children: [
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Container(
-                  padding: EdgeInsets.all(15),
-                  child: Text('Movimientos',
-                      style: Theme.of(context).textTheme.headline6)),
-            ]),
-            Column(
-              children: [
-                /* Container(
-                  color: Theme.of(context).primaryColorDark,
-                  child: CalendarTimeline(
-                    initialDate: _selectedDate,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime.now().add(const Duration(days: 365)),
-                    onDateSelected: (date) {
-                      setState(() {
-                        _selectedDate = date!;
-                      });
-                    },
-                    leftMargin: 10,
-                    monthColor: Theme.of(context).primaryColorLight,
-                    dayColor: Theme.of(context).primaryColorLight,
-                    activeDayColor: Colors.white,
-                    activeBackgroundDayColor:
-                        Theme.of(context).primaryColorLight,
-                    dotsColor: Colors.white,
-                    selectableDayPredicate: (date) => date.day != 23,
-                    locale: 'es',
-                  ),
-                ),*/
-                _listaMovimientos == null
-                    ? const Center(
-                        child: SizedBox(
-                            height: 50.0,
-                            width: 50.0,
-                            child: CircularProgressIndicator()))
-                    : _listaMovimientos!.isEmpty
-                        ? const Center(
-                            child: SizedBox(
-                                child: Text(
-                                    "No Hay Infomacion en los Servidores")))
-                        : Container(
-                            margin: EdgeInsets.symmetric(
-                                vertical: 25.0, horizontal: 14.0),
-                            child: ListView(
-                              children: _listaMovimientos!
-                                  .map((e) => MovimientosCard(model: e))
-                                  .toList(),
-                            )),
-              ],
-            ),
-          ],
-        ));
+    return _listaMovimientos == null
+        ? const Center(
+            child: SizedBox(
+                height: 50.0, width: 50.0, child: CircularProgressIndicator()))
+        : _listaMovimientos!.isEmpty
+            ? const Center(
+                child: SizedBox(
+                    child: Text("No Hay Infomacion en los Servidores")))
+            : Container(
+                margin: EdgeInsets.symmetric(vertical: 25.0, horizontal: 14.0),
+                child: ListView(
+                  children: _listaMovimientos!
+                      .map((e) => MovimientosCard(model: e))
+                      .toList(),
+                ));
   }
 
   _downloadMantenimientos() async {

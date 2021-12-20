@@ -10,20 +10,23 @@ class MovimientosCard extends StatelessWidget {
     final tipo = Container(
         height: 32,
         width: 32,
-        color: model.tipoMovimiento! == "Ingreso"
+        color: model.tipoMovimiento! == "Egreso"
             ? AppTheme.colorHighPriority
             : model.tipoMovimiento! == "Ahorro"
                 ? AppTheme.colorMediumPriority
                 : AppTheme.colorLowPriority,
-        child: Icon(Icons.priority_high,
-            color: model.tipoMovimiento! == "Egreso"
+        child: Icon(Icons.arrow_circle_up,
+            color: model.tipoMovimiento! == "Ingreso"
                 ? Colors.black
                 : Colors.white));
 
     return Card(
         elevation: 7,
         child: ListTile(
+          leading: tipo,
           title: Text((model.descripcion ?? "")),
+          subtitle: Text(model.tipoMovimiento ?? ""),
+          trailing: Text(model.monto.toString()),
         ));
   }
 }
