@@ -2,11 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from 'firebase-admin';
 import * as express from 'express';
 import * as cors from 'cors';
-import { routeAhorro } from "./routers/routeAhorro";
-import { routeCliente } from "./routers/routeCliente";
-import { routeCuenta } from "./routers/routeCuenta";
-import { routeMovimiento } from "./routers/routeMovimiento";
-import { routeTipoMovimiento } from "./routers/routeTipoMovimiento";
+import { router } from "./router";
 
 //============= SERVIDOR EXPRESS ================//
 const server = express();
@@ -20,11 +16,8 @@ const db = admin.firestore(); //Base de datos de collections & documents
 db.settings({ignoreUndefinedProperties : true, timestampsInSnapshot: true});
 
 //============= RUTAS ================//
-routeAhorro(server);
-routeCliente(server);
-routeCuenta(server);
-routeMovimiento(server);
-routeTipoMovimiento(server);
+router(server);
+
 
 
 //============= EXPORTACION DEL SERVIDOR ================//
