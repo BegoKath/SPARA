@@ -38,11 +38,12 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               Container(
                   padding: EdgeInsets.all(15),
-                  child: Text('Movimientos', style: GoogleFonts.aladin())),
+                  child: Text('Movimientos',
+                      style: Theme.of(context).textTheme.headline6)),
             ]),
             Column(
               children: [
-                Container(
+                /* Container(
                   color: Theme.of(context).primaryColorDark,
                   child: CalendarTimeline(
                     initialDate: _selectedDate,
@@ -63,16 +64,26 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
                     selectableDayPredicate: (date) => date.day != 23,
                     locale: 'es',
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 7.0),
-                  child: ListView(
-                    children: _listaMovimientos!
-                        .map((e) => MovimientosCard(model: e))
-                        .toList(),
-                  ),
-                )
+                ),*/
+                _listaMovimientos == null
+                    ? const Center(
+                        child: SizedBox(
+                            height: 50.0,
+                            width: 50.0,
+                            child: CircularProgressIndicator()))
+                    : _listaMovimientos!.isEmpty
+                        ? const Center(
+                            child: SizedBox(
+                                child: Text(
+                                    "No Hay Infomacion en los Servidores")))
+                        : Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 25.0, horizontal: 14.0),
+                            child: ListView(
+                              children: _listaMovimientos!
+                                  .map((e) => MovimientosCard(model: e))
+                                  .toList(),
+                            )),
               ],
             ),
           ],

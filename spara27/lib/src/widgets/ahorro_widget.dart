@@ -1,27 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:spara27/src/models/ahorro_model.dart';
+import 'package:spara27/src/services/ahorro_service.dart';
+import 'package:spara27/src/widgets/ahorro_card.dart';
 
-class AhorroWidget extends StatelessWidget {
+class AhorroWidget extends StatefulWidget {
   const AhorroWidget({Key? key}) : super(key: key);
 
   @override
+  State<AhorroWidget> createState() => _AhorroWidgetState();
+}
+
+class _AhorroWidgetState extends State<AhorroWidget> {
+  final AhorrosService _ahorroService = AhorrosService();
+
+  List<Ahorro>? _listaAhorros;
+  @override
+  void initState() {
+    super.initState();
+    _downloadMantenimientos();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).primaryColor,
-      width: 250.w,
-      child: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.home, size: 50.h),
-          Text("Inicio", style: Theme.of(context).textTheme.headline1),
-          Text("Inicio", style: Theme.of(context).textTheme.headline2),
-          Text("Inicio", style: Theme.of(context).textTheme.headline3),
-          Text("Inicio", style: Theme.of(context).textTheme.headline4),
-          Text("Inicio", style: Theme.of(context).textTheme.headline5),
-          Text("Inicio", style: Theme.of(context).textTheme.headline6),
-        ],
-      )),
-    );
+    final Size size = MediaQuery.of(context).size;
+
+    return _listaAhorros == null
+        ? const Center(
+            child: SizedBox(
+                height: 50.0, width: 50.0, child: CircularProgressIndicator()))
+        : _listaAhorros!.isEmpty
+            ? const Center(
+                child: SizedBox(
+                    child: Text("No Hay Infomacion en los Servidores")))
+            : Container(
+                margin: EdgeInsets.symmetric(vertical: 25.0, horizontal: 14.0),
+                child: ListView(
+                  children:
+                      _listaAhorros!.map((e) => AhorroCard(model: e)).toList(),
+                ));
+  }
+
+  _downloadMantenimientos() async {
+    _listaAhorros = await _ahorroService.getAhorros();
+    if (mounted) {
+      setState(() {});
+    }
   }
 }

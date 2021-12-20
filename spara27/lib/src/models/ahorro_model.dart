@@ -6,36 +6,32 @@ String ahorroToJson(Ahorro data) => json.encode(data.toJson());
 
 class Ahorro {
   Ahorro({
-    this.id,
+    this.idahorro,
     this.monto,
     this.metaAhorro,
     this.descripcion,
     this.fechaInicio,
-    this.fechaFinal,
   });
 
-  int? id;
-  int? monto;
+  String? idahorro;
+  double? monto;
   int? metaAhorro;
   String? descripcion;
-  DateTime? fechaInicio;
-  DateTime? fechaFinal;
+  String? fechaInicio;
 
   factory Ahorro.fromJson(Map<String, dynamic> json) => Ahorro(
-        id: json["Id"],
-        monto: json["monto"],
-        metaAhorro: json["meta-ahorro"],
+        idahorro: json["idahorro"],
+        monto: json["monto"].toDouble(),
+        metaAhorro: json["metaAhorro"],
         descripcion: json["descripcion"],
-        fechaInicio: DateTime.parse(json["fecha_inicio"]),
-        fechaFinal: DateTime.parse(json["fecha_final"]),
+        fechaInicio: json["fechaInicio"],
       );
 
   Map<String, dynamic> toJson() => {
-        "Id": id,
+        "idahorro": idahorro,
         "monto": monto,
-        "meta-ahorro": metaAhorro,
+        "metaAhorro": metaAhorro,
         "descripcion": descripcion,
-        "fecha_inicio": fechaInicio!.toIso8601String(),
-        "fecha_final": fechaFinal!.toIso8601String(),
+        "fechaInicio": fechaInicio,
       };
 }
