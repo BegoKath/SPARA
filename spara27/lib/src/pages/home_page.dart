@@ -27,10 +27,15 @@ class _HomePageState extends State<HomePage> {
     final Size size = MediaQuery.of(context).size;
     final mainProvider = Provider.of<MainProvider>(context, listen: true);
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          bottomOpacity: 0.0,
+          elevation: 0.0,
           leading: SizedBox.square(
               dimension: 40.0,
               child: Switch(
+                activeColor: Theme.of(context).primaryColorLight,
                 value: mainProvider.mode,
                 onChanged: (bool value) async {
                   mainProvider.mode = value;
@@ -68,10 +73,10 @@ class _HomePageState extends State<HomePage> {
                   Center(
                     heightFactor: 0.6,
                     child: FloatingActionButton(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).primaryColorLight,
                         child: const Icon(
                           Icons.add,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                         elevation: 0.1,
                         onPressed: () {}),
@@ -86,8 +91,8 @@ class _HomePageState extends State<HomePage> {
                             icon: Icon(
                               Icons.home,
                               color: currentIndex == 0
-                                  ? Theme.of(context).secondaryHeaderColor
-                                  : Colors.grey.shade400,
+                                  ? Theme.of(context).primaryColorDark
+                                  : Colors.grey,
                             ),
                             onPressed: () {
                               mainProvider.index = 0;
@@ -99,8 +104,8 @@ class _HomePageState extends State<HomePage> {
                             icon: Icon(
                               Icons.account_balance_wallet_outlined,
                               color: currentIndex == 1
-                                  ? Theme.of(context).secondaryHeaderColor
-                                  : Colors.grey.shade400,
+                                  ? Theme.of(context).primaryColorDark
+                                  : Colors.grey,
                             ),
                             onPressed: () {
                               mainProvider.index = 1;
@@ -114,8 +119,8 @@ class _HomePageState extends State<HomePage> {
                           icon: Icon(
                             Icons.attach_money_outlined,
                             color: currentIndex == 2
-                                ? Theme.of(context).secondaryHeaderColor
-                                : Colors.grey.shade400,
+                                ? Theme.of(context).primaryColorDark
+                                : Colors.grey,
                           ),
                           onPressed: () {
                             mainProvider.index = 2;
@@ -127,8 +132,8 @@ class _HomePageState extends State<HomePage> {
                             icon: Icon(
                               Icons.emoji_emotions_outlined,
                               color: currentIndex == 3
-                                  ? Theme.of(context).secondaryHeaderColor
-                                  : Colors.grey.shade400,
+                                  ? Theme.of(context).primaryColorDark
+                                  : Colors.grey,
                             ),
                             onPressed: () {
                               mainProvider.index = 3;
@@ -166,7 +171,7 @@ class BNBCustomPainter extends CustomPainter {
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.lineTo(0, 20);
-    canvas.drawShadow(path, Colors.black, 5, true);
+    canvas.drawShadow(path, Colors.black, 4, true);
     canvas.drawPath(path, paint);
   }
 

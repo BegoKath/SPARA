@@ -20,14 +20,14 @@ class TipoMovimiento {
 
   int? id;
   int? montoTotal;
-  Cliente? cliente;
+  Usuario? cliente;
   List<Ahorro>? ahorros;
   List<Movimiento>? movimientos;
 
   factory TipoMovimiento.fromJson(Map<String, dynamic> json) => TipoMovimiento(
         id: json["Id"],
         montoTotal: json["monto_total"],
-        cliente: Cliente.fromJson(json["Cliente"]),
+        cliente: Usuario.fromJson(json["Cliente"]),
         ahorros:
             List<Ahorro>.from(json["Ahorros"].map((x) => Ahorro.fromJson(x))),
         movimientos: List<Movimiento>.from(

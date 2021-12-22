@@ -9,6 +9,7 @@ class HomeCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(top: 50.0),
       elevation: 5,
+      color: Theme.of(context).secondaryHeaderColor,
       shadowColor: Theme.of(context).secondaryHeaderColor,
       shape: RoundedRectangleBorder(
           side: BorderSide(color: Colors.white70, width: 1),

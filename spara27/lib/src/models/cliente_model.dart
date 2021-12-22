@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-Cliente clienteFromJson(String str) => Cliente.fromJson(json.decode(str));
+Usuario usuarioFromJson(String str) => Usuario.fromJson(json.decode(str));
 
-String clienteToJson(Cliente data) => json.encode(data.toJson());
+String usuarioToJson(Usuario data) => json.encode(data.toJson());
 
-class Cliente {
-  Cliente({
-    this.id,
+class Usuario {
+  Usuario({
+    this.idCliente,
     this.usuario,
     this.contrasea,
     this.nombre,
@@ -17,37 +17,37 @@ class Cliente {
     this.sexo,
   });
 
-  int? id;
+  String? idCliente;
   String? usuario;
   String? contrasea;
   String? nombre;
   String? apellido;
   String? edad;
   String? email;
-  DateTime? fechaNacimiento;
+  String? fechaNacimiento;
   String? sexo;
 
-  factory Cliente.fromJson(Map<String, dynamic> json) => Cliente(
-        id: json["Id"],
+  factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
+        idCliente: json["idCliente"],
         usuario: json["usuario"],
-        contrasea: json["contrasea"],
+        contrasea: json["contraseña"],
         nombre: json["nombre"],
         apellido: json["apellido"],
         edad: json["edad"],
         email: json["email"],
-        fechaNacimiento: DateTime.parse(json["fecha_nacimiento"]),
+        fechaNacimiento: json["fechaNacimiento"],
         sexo: json["sexo"],
       );
 
   Map<String, dynamic> toJson() => {
-        "Id": id,
+        "idCliente": idCliente,
         "usuario": usuario,
-        "contrasea": contrasea,
+        "contraseña": contrasea,
         "nombre": nombre,
         "apellido": apellido,
         "edad": edad,
         "email": email,
-        "fecha_nacimiento": fechaNacimiento!.toIso8601String(),
+        "fechaNacimiento": fechaNacimiento,
         "sexo": sexo,
       };
 }

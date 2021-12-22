@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-const sparaPrimary = Color.fromRGBO(31, 58, 64, 1);
-const sparaGreen100 = Color(0xFFFEDBD0);
-const sparaGreen300 = Color(0xFFFBB8AC);
-const sparaGreen400 = Color(0xFFEAA4A4);
+const sparaGreen50 = Color.fromRGBO(77, 105, 115, 1);
+const sparaGreen100 = Color.fromRGBO(53, 81, 90, 1);
+const sparaGreen300 = Color.fromRGBO(19, 46, 55, 1);
+const sparaGreen400 = Color.fromRGBO(7, 30, 38, 1);
 
-const sparaGreen900 = Color(0xFF442B2D);
+const sparaGreen900 = Color.fromRGBO(32, 58, 67, 1);
 
-const sparaErrorRed = Color(0xFFC5032B);
+const sparaErrorRed = Color.fromRGBO(213, 136, 106, 1);
 
 const sparaSurfaceWhite = Color(0xFFFFFBFA);
 const sparaBackgroundWhite = Colors.white;

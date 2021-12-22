@@ -31,11 +31,26 @@ class AppTheme {
   static final TextStyle _bodyText1 = _subTitle2.copyWith();
   static final TextStyle _bodyText2 = _bodyText1.copyWith();
   static final TextStyle _caption = _bodyText2.copyWith();
-
   static ThemeData themeData(bool ligthMode) {
     return ThemeData(
-        textTheme: textTheme,
-        secondaryHeaderColor: const Color.fromRGBO(0, 77, 64, 1),
-        brightness: ligthMode ? Brightness.light : Brightness.dark);
+      textTheme: textTheme,
+      primaryColor: sparaGreen900,
+      primaryColorLight: sparaGreen50,
+      primaryColorDark: sparaGreen400,
+      colorScheme: ColorScheme(
+          primary: sparaGreen900,
+          primaryVariant: sparaGreen300,
+          secondary: sparaGreen100,
+          secondaryVariant: sparaGreen50,
+          surface: sparaGreen900,
+          background: sparaGreen900,
+          error: sparaErrorRed,
+          onPrimary: sparaGreen400,
+          onBackground: sparaGreen300,
+          onSecondary: sparaGreen100,
+          onSurface: sparaGreen300,
+          onError: sparaErrorRed,
+          brightness: ligthMode ? Brightness.light : Brightness.dark),
+    );
   }
 }
