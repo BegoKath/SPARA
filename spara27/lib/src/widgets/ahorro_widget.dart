@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:spara27/src/models/ahorro_model.dart';
 import 'package:spara27/src/services/ahorro_service.dart';
 import 'package:spara27/src/widgets/ahorro_card.dart';
@@ -23,8 +23,6 @@ class _AhorroWidgetState extends State<AhorroWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return _listaAhorros == null
         ? const Center(
             child: SizedBox(
@@ -34,7 +32,8 @@ class _AhorroWidgetState extends State<AhorroWidget> {
                 child: SizedBox(
                     child: Text("No Hay Infomacion en los Servidores")))
             : Container(
-                margin: EdgeInsets.symmetric(vertical: 25.0, horizontal: 14.0),
+                margin: const EdgeInsets.symmetric(
+                    vertical: 25.0, horizontal: 14.0),
                 child: ListView(
                   children:
                       _listaAhorros!.map((e) => AhorroCard(model: e)).toList(),

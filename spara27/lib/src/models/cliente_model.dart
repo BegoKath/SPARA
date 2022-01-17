@@ -5,17 +5,16 @@ Usuario usuarioFromJson(String str) => Usuario.fromJson(json.decode(str));
 String usuarioToJson(Usuario data) => json.encode(data.toJson());
 
 class Usuario {
-  Usuario({
-    this.idCliente,
-    this.usuario,
-    this.contrasea,
-    this.nombre,
-    this.apellido,
-    this.edad,
-    this.email,
-    this.fechaNacimiento,
-    this.sexo,
-  });
+  Usuario(
+      {this.idCliente,
+      this.usuario,
+      this.contrasea,
+      this.nombre,
+      this.apellido,
+      this.edad,
+      this.email,
+      this.fechaNacimiento,
+      this.sexo});
 
   String? idCliente;
   String? usuario;

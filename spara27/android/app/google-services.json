@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "375030426808",
+    "project_id": "spara-backend",
+    "storage_bucket": "spara-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375030426808:android:f0c81cf821f34a096e184d",
+        "android_client_info": {
+          "package_name": "com.example.spara27"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375030426808-kq7qsc5m85lp3qv1j4n51u5cij44fjrg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7WBZFbnFNQqZwxXgxpEiMpxNtm37NeKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375030426808-kq7qsc5m85lp3qv1j4n51u5cij44fjrg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

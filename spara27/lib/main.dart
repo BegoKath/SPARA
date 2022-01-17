@@ -1,15 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:spara27/src/pages/home_page.dart';
+
 import 'package:spara27/src/providers/main_provider.dart';
+import 'package:spara27/src/providers/user_provider.dart';
 import 'package:spara27/src/theme/main_theme.dart';
 
-void main() {
+// Create a reference to the cities collection
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MainProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider())
       ],
       child: const MyApp(),
     ),
@@ -30,10 +37,15 @@ class MyApp extends StatelessWidget {
             return ScreenUtilInit(
                 designSize: const Size(360, 690),
                 builder: () => MaterialApp(
-                    debugShowCheckedModeBanner: false,
-                    title: 'Spara',
-                    theme: AppTheme.themeData(mainProvider.mode),
-                    home: const HomePage()));
+                      debugShowCheckedModeBanner: false,
+                      title: 'Spara',
+                      theme: AppTheme.themeData(mainProvider.mode),
+                      /*initialRoute: LoginPage.id,
+                        routes: {
+                          LoginPage.id: (context) => const LoginPage(),
+                        }*/
+                      home: const HomePage(),
+                    ));
           }
           return const SizedBox.square(
               dimension: 100.0, child: CircularProgressIndicator());

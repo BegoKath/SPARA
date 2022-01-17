@@ -30,8 +30,6 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return listaMovimientosWidget();
   }
 
@@ -50,7 +48,7 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
                 child: Column(children: [
                   calendario(),
                   Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     child: Text(
                       "Movimientos",
                       style: GoogleFonts.robotoSlab(

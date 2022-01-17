@@ -13,7 +13,7 @@ class InicioWidget extends StatefulWidget {
 
 class _InicioWidgetState extends State<InicioWidget> {
   final ClienteService _clienteService = ClienteService();
-  late Usuario _cliente;
+  late Usuario _cliente = Usuario();
   @override
   void initState() {
     super.initState();
@@ -23,7 +23,6 @@ class _InicioWidgetState extends State<InicioWidget> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
     return _cliente == null
         ? const Center(
             child: SizedBox(

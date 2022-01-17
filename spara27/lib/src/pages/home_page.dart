@@ -4,7 +4,7 @@ import 'package:spara27/src/utils/main_menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spara27/src/providers/main_provider.dart';
 
-final List<String> _options = ["Inicio", "Movimientos", "Ahorros", "Perfil"];
+//final List<String> _options = ["Inicio", "Movimientos", "Ahorros", "Perfil"];
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               )),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Image(
                 image: NetworkImage(
                     "https://res.cloudinary.com/dvpl8qsgd/image/upload/v1639900999/SPARA/Property_1_Default_iuphlt.png"),
@@ -60,11 +60,10 @@ class _HomePageState extends State<HomePage> {
           Positioned(
             bottom: 0,
             left: 0,
-            child: Container(
+            child: SizedBox(
               width: size.width,
               height: 80,
               child: Stack(
-                overflow: Overflow.visible,
                 children: [
                   CustomPaint(
                     size: Size(size.width, 80),
@@ -81,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                         elevation: 0.1,
                         onPressed: () {}),
                   ),
-                  Container(
+                  SizedBox(
                     width: size.width,
                     height: 80,
                     child: Row(

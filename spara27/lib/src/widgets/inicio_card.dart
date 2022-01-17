@@ -12,14 +12,14 @@ class HomeCard extends StatelessWidget {
       color: Theme.of(context).secondaryHeaderColor,
       shadowColor: Theme.of(context).secondaryHeaderColor,
       shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.white70, width: 1),
+          side: const BorderSide(color: Colors.white70, width: 1),
           borderRadius: BorderRadius.circular(10)),
-      child: Container(
+      child: SizedBox(
         height: 400,
         width: size.width - 20,
         child: Center(
             child: Column(
-          children: [Text("GRAFICO PASTEL"), Text("Categorias")],
+          children: const [Text("GRAFICO PASTEL"), Text("Categorias")],
         )),
       ),
     );
