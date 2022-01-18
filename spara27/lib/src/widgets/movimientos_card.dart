@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:spara27/src/models/movimiento_model.dart';
 import 'package:spara27/src/theme/main_theme.dart';
 
@@ -7,18 +8,10 @@ class MovimientosCard extends StatelessWidget {
   final Movimiento model;
   @override
   Widget build(BuildContext context) {
-    final tipo = Container(
-        height: 32,
-        width: 32,
+    final tipo = Icon(Icons.attach_money,
         color: model.tipoMovimiento! == "Egreso"
             ? AppTheme.colorHighPriority
-            : model.tipoMovimiento! == "Ahorro"
-                ? AppTheme.colorMediumPriority
-                : AppTheme.colorLowPriority,
-        child: Icon(Icons.arrow_circle_up,
-            color: model.tipoMovimiento! == "Ingreso"
-                ? Colors.black
-                : Colors.white));
+            : AppTheme.colorLowPriority);
 
     return Card(
         elevation: 7,
@@ -26,7 +19,16 @@ class MovimientosCard extends StatelessWidget {
           leading: tipo,
           title: Text((model.descripcion ?? "")),
           subtitle: Text(model.tipoMovimiento ?? ""),
-          trailing: Text(model.monto.toString()),
+          trailing: Text(
+              model.tipoMovimiento! == "Egreso"
+                  ? "- " + model.monto.toString()
+                  : "+ " + model.monto.toString(),
+              style: GoogleFonts.robotoSlab(
+                  color: model.tipoMovimiento! == "Egreso"
+                      ? AppTheme.colorHighPriority
+                      : AppTheme.colorLowPriority,
+                  fontSize: 15.0,
+                  textStyle: Theme.of(context).textTheme.headline5)),
         ));
   }
 }

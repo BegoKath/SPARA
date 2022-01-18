@@ -25,7 +25,7 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
   }
 
   void _resetSelectedDate() {
-    _selectedDate = DateTime.now().add(const Duration(days: 5));
+    _selectedDate = DateTime.now();
   }
 
   @override
@@ -37,7 +37,9 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
     return _listaMovimientos == null
         ? const Center(
             child: SizedBox(
-                height: 50.0, width: 50.0, child: CircularProgressIndicator()))
+                height: 50.0,
+                width: 50.0,
+                child: CircularProgressIndicator(color: Colors.white)))
         : _listaMovimientos!.isEmpty
             ? const Center(
                 child: SizedBox(
@@ -50,7 +52,8 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
                   Padding(
                     padding: const EdgeInsets.all(15),
                     child: Text(
-                      "Movimientos",
+                      "Ultimos Movimientos",
+                      textAlign: TextAlign.justify,
                       style: GoogleFonts.robotoSlab(
                           color: Colors.white,
                           textStyle: Theme.of(context).textTheme.headline6),
@@ -68,7 +71,9 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
 
   Widget calendario() {
     return Container(
-        color: Theme.of(context).primaryColorDark,
+        decoration: BoxDecoration(
+            color: Theme.of(context).secondaryHeaderColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: CalendarTimeline(
           initialDate: _selectedDate,
           firstDate: DateTime.now(),
@@ -79,8 +84,7 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
             });
           },
           leftMargin: 10,
-          monthColor: Colors.white,
-          dayColor: Colors.white38,
+          dayColor: Colors.black,
           activeDayColor: Colors.white,
           activeBackgroundDayColor: Theme.of(context).primaryColorLight,
           dotsColor: Colors.white,

@@ -70,176 +70,190 @@ class _PerfilWidgetState extends State<PerfilWidget> {
     var _lastnameController = TextEditingController(text: usuario!.apellido);
     var _ageController = TextEditingController(text: usuario!.edad);
 
-    return Center(
-      child: Container(
-        margin: const EdgeInsets.all(10.0),
-        height: 500,
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 2,
-            ),
-            color: Theme.of(context).secondaryHeaderColor,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            )),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.symmetric(horizontal: 40.0)),
-                        backgroundColor: MaterialStateProperty.all(
-                            Theme.of(context).primaryColor),
-                        side: MaterialStateProperty.all(
-                          BorderSide.lerp(
-                              const BorderSide(width: 2.0, color: Colors.black),
-                              const BorderSide(width: 2.0, color: Colors.black),
-                              10.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Usuario user = Usuario(
-                              nombre: _nameController.text,
-                              uid: _userProvider.getUid,
-                              apellido: _lastnameController.text,
-                              email: _userProvider.getEmail,
-                              edad: _ageController.text,
-                              urlImage: urlImagen,
-                              idD: usuario!.idD);
-                          _clienteService.updateToServer(user);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Ingrese los campos')),
-                          );
-                        }
-                      },
-                      child: Text(
-                        "Actualizar",
-                        style: GoogleFonts.robotoSlab(
-                            color: Colors.white,
-                            textStyle: Theme.of(context).textTheme.subtitle1),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 8.0),
-                  child: Text(
-                    'Perfil',
-                    style: GoogleFonts.robotoSlab(
-                        fontSize: 25,
-                        textStyle: Theme.of(context).textTheme.subtitle1),
+    return usuario == null
+        ? const Center(
+            child: SizedBox(
+                height: 50.0,
+                width: 50.0,
+                child: CircularProgressIndicator(color: Colors.white)))
+        : Center(
+            child: Container(
+              margin: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 2,
                   ),
-                ),
-                SizedBox.fromSize(
-                  size: const Size(150, 150), // button width and height
-                  child: ClipOval(
-                    child: urlImagen.isEmpty
-                        ? Material(
-                            color: Colors.cyan, // button color
-                            child: InkWell(
-                              splashColor: Colors.blue,
-                              // splash color
-                              // button pressed
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(Icons.person_add_alt_1,
-                                      size: 40, color: Colors.white), // icon
-                                ],
+                  color: Theme.of(context).secondaryHeaderColor,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  )),
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            style: ButtonStyle(
+                              padding: MaterialStateProperty.all(
+                                  const EdgeInsets.symmetric(horizontal: 40.0)),
+                              backgroundColor: MaterialStateProperty.all(
+                                  Theme.of(context).primaryColor),
+                              side: MaterialStateProperty.all(
+                                BorderSide.lerp(
+                                    const BorderSide(
+                                        width: 2.0, color: Colors.black),
+                                    const BorderSide(
+                                        width: 2.0, color: Colors.black),
+                                    10.0),
                               ),
                             ),
-                          )
-                        : Image(image: NetworkImage(urlImagen)),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                Usuario user = Usuario(
+                                    nombre: _nameController.text,
+                                    uid: _userProvider.getUid,
+                                    apellido: _lastnameController.text,
+                                    email: _userProvider.getEmail,
+                                    edad: _ageController.text,
+                                    urlImage: urlImagen,
+                                    idD: usuario!.idD);
+                                _clienteService.updateToServer(user);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Ingrese los campos')),
+                                );
+                              }
+                            },
+                            child: Text(
+                              "Actualizar",
+                              style: GoogleFonts.robotoSlab(
+                                  color: Colors.white,
+                                  textStyle:
+                                      Theme.of(context).textTheme.subtitle1),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 8.0),
+                        child: Text(
+                          'Perfil',
+                          style: GoogleFonts.robotoSlab(
+                              fontSize: 25,
+                              textStyle: Theme.of(context).textTheme.subtitle1),
+                        ),
+                      ),
+                      SizedBox.fromSize(
+                        size: const Size(150, 150), // button width and height
+                        child: ClipOval(
+                          child: urlImagen.isEmpty
+                              ? Material(
+                                  color: Colors.cyan, // button color
+                                  child: InkWell(
+                                    splashColor: Colors.blue,
+                                    // splash color
+                                    // button pressed
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(Icons.person_add_alt_1,
+                                            size: 40,
+                                            color: Colors.white), // icon
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Image(image: NetworkImage(urlImagen)),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                              iconSize: 30,
+                              onPressed: () {
+                                opcionesCamara(context);
+                              },
+                              icon: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.cyan,
+                              ))
+                        ],
+                      ),
+                      TextFormField(
+                        style: GoogleFonts.robotoSlab(
+                            textStyle: Theme.of(context).textTheme.subtitle1),
+                        controller: _nameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese un Nombre';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.person_outline,
+                                color: Colors.cyan),
+                            hintText: 'Nombre',
+                            hintStyle: GoogleFonts.robotoSlab(
+                                color: Theme.of(context).primaryColorDark,
+                                textStyle:
+                                    Theme.of(context).textTheme.subtitle1)),
+                      ),
+                      TextFormField(
+                        style: GoogleFonts.robotoSlab(
+                            textStyle: Theme.of(context).textTheme.subtitle1),
+                        controller: _lastnameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese un Apellido';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.person_outline,
+                                color: Colors.cyan),
+                            hintText: 'Apellido',
+                            hintStyle: GoogleFonts.robotoSlab(
+                                color: Theme.of(context).primaryColorDark,
+                                textStyle:
+                                    Theme.of(context).textTheme.subtitle1)),
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        style: GoogleFonts.robotoSlab(
+                            textStyle: Theme.of(context).textTheme.subtitle1),
+                        controller: _ageController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Ingrese la Edad';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.child_care_outlined,
+                                color: Colors.cyan),
+                            hintText: 'Edad',
+                            hintStyle: GoogleFonts.robotoSlab(
+                                color: Theme.of(context).primaryColorDark,
+                                textStyle:
+                                    Theme.of(context).textTheme.subtitle1)),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                    ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        iconSize: 30,
-                        onPressed: () {
-                          opcionesCamara(context);
-                        },
-                        icon: const Icon(
-                          Icons.camera_alt,
-                          color: Colors.cyan,
-                        ))
-                  ],
-                ),
-                TextFormField(
-                  style: GoogleFonts.robotoSlab(
-                      textStyle: Theme.of(context).textTheme.subtitle1),
-                  controller: _nameController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un Nombre';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                      prefixIcon:
-                          const Icon(Icons.person_outline, color: Colors.cyan),
-                      hintText: 'Nombre',
-                      hintStyle: GoogleFonts.robotoSlab(
-                          color: Theme.of(context).primaryColorDark,
-                          textStyle: Theme.of(context).textTheme.subtitle1)),
-                ),
-                TextFormField(
-                  style: GoogleFonts.robotoSlab(
-                      textStyle: Theme.of(context).textTheme.subtitle1),
-                  controller: _lastnameController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un Apellido';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                      prefixIcon:
-                          const Icon(Icons.person_outline, color: Colors.cyan),
-                      hintText: 'Apellido',
-                      hintStyle: GoogleFonts.robotoSlab(
-                          color: Theme.of(context).primaryColorDark,
-                          textStyle: Theme.of(context).textTheme.subtitle1)),
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  style: GoogleFonts.robotoSlab(
-                      textStyle: Theme.of(context).textTheme.subtitle1),
-                  controller: _ageController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Ingrese la Edad';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.child_care_outlined,
-                          color: Colors.cyan),
-                      hintText: 'Edad',
-                      hintStyle: GoogleFonts.robotoSlab(
-                          color: Theme.of(context).primaryColorDark,
-                          textStyle: Theme.of(context).textTheme.subtitle1)),
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 
   void opcionesCamara(context) {
