@@ -259,6 +259,7 @@ class _UserFormState extends State<UserForm> {
                     InkWell(
                         onTap: () async {
                           await _selectImage(ImageSource.camera);
+                          Navigator.of(context).pop();
                         },
                         child: Container(
                           padding: const EdgeInsets.all(20.0),
@@ -287,6 +288,7 @@ class _UserFormState extends State<UserForm> {
                     InkWell(
                         onTap: () async {
                           await _selectImage(ImageSource.gallery);
+                          Navigator.of(context).pop();
                         },
                         child: Container(
                           padding: const EdgeInsets.all(20.0),

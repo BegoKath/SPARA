@@ -33,6 +33,7 @@ class ClienteService {
     var list = result.docs;
     dynamic us = list[0].data();
     user = Usuario.fromJson(us);
+    user.idD = list[0].id;
     return user;
   }
 
@@ -41,6 +42,21 @@ class ClienteService {
       CollectionReference reference =
           FirebaseFirestore.instance.collection('cliente');
       await reference.add({
+        "uid": usu.uid,
+        "nombre": usu.nombre,
+        "apellido": usu.apellido,
+        "email": usu.email,
+        "edad": usu.edad,
+        "urlImage": usu.urlImage
+      });
+    });
+  }
+
+  Future<void> updateToServer(Usuario usu) async {
+    FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
+      CollectionReference reference =
+          FirebaseFirestore.instance.collection('cliente');
+      await reference.doc(usu.idD).update({
         "uid": usu.uid,
         "nombre": usu.nombre,
         "apellido": usu.apellido,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:spara27/src/providers/user_provider.dart';
-import 'package:spara27/src/widgets/inicio_card.dart';
 
 // ignore: must_be_immutable
 class InicioWidget extends StatefulWidget {
@@ -31,9 +30,6 @@ class _InicioWidgetState extends State<InicioWidget> {
                         color: Colors.white,
                         textStyle: Theme.of(context).textTheme.headline6))),
           ]),
-          const SizedBox(
-            height: 20.0,
-          ),
           Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,24 +41,24 @@ class _InicioWidgetState extends State<InicioWidget> {
                       borderRadius: BorderRadius.circular(50.0),
                       color: Theme.of(context).secondaryHeaderColor),
                   child: Center(
-                    child: Column(
-                      children: [
-                        Text("Saldo",
-                            style: GoogleFonts.robotoSlab(
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyText1)),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        const Icon(
+                          Icons.attach_money,
+                          size: 40.0,
+                        ),
                         Text("1500",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.robotoSlab(
+                                fontSize: 40.0,
                                 textStyle:
                                     Theme.of(context).textTheme.headline5)),
-                      ],
-                    ),
-                  )),
+                      ]))),
               const SizedBox(
-                height: 10.0,
+                height: 60,
               ),
-              const HomeCard(),
+              //const HomeCard(),
             ],
           ))
         ],

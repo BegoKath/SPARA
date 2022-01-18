@@ -29,8 +29,10 @@ class _HomePageState extends State<HomePage> {
     UserProvider _userProvider =
         Provider.of<UserProvider>(context, listen: false);
     var uid = _userProvider.getUid;
+
     Usuario usuario = await _clienteService.getUsuario(uid!);
     _userProvider.setNombre = usuario.nombre!;
+    _userProvider.setUser(usuario);
     if (mounted) {
       setState(() {});
     }
@@ -82,11 +84,11 @@ class _HomePageState extends State<HomePage> {
             left: 0,
             child: SizedBox(
               width: size.width,
-              height: 80,
+              height: 70,
               child: Stack(
                 children: [
                   CustomPaint(
-                    size: Size(size.width, 80),
+                    size: Size(size.width, 90),
                     painter: BNBCustomPainter(),
                   ),
                   Center(
@@ -102,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(
                     width: size.width,
-                    height: 80,
+                    height: 90,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

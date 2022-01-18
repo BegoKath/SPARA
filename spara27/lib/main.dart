@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ScreenUtilInit(
-                designSize: const Size(360, 690),
+                designSize: const Size(360, 800),
                 builder: () => MaterialApp(
                         debugShowCheckedModeBanner: false,
                         title: 'Spara',
