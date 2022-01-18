@@ -3,7 +3,7 @@ import 'package:spara27/src/theme/colors.dart';
 
 class AppTheme {
   static const Color colorMediumPriority = Colors.yellow;
-  static final Color colorHighPriority = Colors.red;
+  static const Color colorHighPriority = Colors.red;
   static final Color colorLowPriority = Colors.green.shade400;
   static final TextTheme textTheme = TextTheme(
     headline1: _headLine1,

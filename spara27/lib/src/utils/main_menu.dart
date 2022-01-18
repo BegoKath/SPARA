@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:spara27/src/widgets/ahorro_widget.dart';
 import 'package:spara27/src/widgets/inicio_widget.dart';
