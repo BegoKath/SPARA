@@ -35,4 +35,19 @@ class ClienteService {
     user = Usuario.fromJson(us);
     return user;
   }
+
+  Future<void> sendToServer(Usuario usu) async {
+    FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
+      CollectionReference reference =
+          FirebaseFirestore.instance.collection('cliente');
+      await reference.add({
+        "uid": usu.uid,
+        "nombre": usu.nombre,
+        "apellido": usu.apellido,
+        "email": usu.email,
+        "edad": usu.edad,
+        "urlImage": usu.urlImage
+      });
+    });
+  }
 }

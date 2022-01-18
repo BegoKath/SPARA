@@ -19,6 +19,7 @@ List<MenuItem> menuOptions = [
   MenuItem('Ahorro', Icons.savings),
   MenuItem('Perfil', Icons.person)
 ];
+
 List<Widget> contentWidgets = [
   const InicioWidget(),
   const MovimientosWidget(),

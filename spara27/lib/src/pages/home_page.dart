@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spara27/src/models/cliente_model.dart';
+import 'package:spara27/src/providers/user_provider.dart';
+import 'package:spara27/src/services/cliente_service.dart';
 import 'package:spara27/src/utils/main_menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spara27/src/providers/main_provider.dart';
@@ -15,11 +18,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
-
+  final ClienteService _clienteService = ClienteService();
   setBottomBarIndex(index) {
     setState(() {
       currentIndex = index;
     });
+  }
+
+  _downloadUsuario() async {
+    UserProvider _userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    var uid = _userProvider.getUid;
+    Usuario usuario = await _clienteService.getUsuario(uid!);
+    _userProvider.setNombre = usuario.nombre!;
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    _downloadUsuario();
+    super.initState();
   }
 
   @override

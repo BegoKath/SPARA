@@ -5,9 +5,17 @@ import 'package:flutter/material.dart';
 class UserProvider extends ChangeNotifier {
   String? _uid;
   String? _email;
+  String _nombre = "";
 
   String? get getUid => _uid;
   String? get getEmail => _email;
+  String? get getNombre => _nombre;
+
+  set setNombre(String value) {
+    _nombre = value;
+    notifyListeners();
+  }
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<bool> signUpUser(String email, String password) async {
@@ -18,6 +26,7 @@ class UserProvider extends ChangeNotifier {
       if (_authResult.user != null) {
         reval = true;
         _uid = _auth.currentUser!.uid;
+        _email = _auth.currentUser!.email;
       }
     } catch (e) {
       // ignore: avoid_print

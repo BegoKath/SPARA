@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:spara27/src/pages/home_page.dart';
+import 'package:spara27/src/pages/user_widget.dart';
+import 'package:spara27/src/providers/user_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,6 +13,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 400.0,
                   width: 600.0,
                   decoration: BoxDecoration(
-                    color: Colors.yellow, //PARA PROBAR CONTAINER
+                    color: Colors.black12, //PARA PROBAR CONTAINER
                     borderRadius: BorderRadius.circular(10.0),
                     image: const DecorationImage(
                       image: NetworkImage(
@@ -35,93 +43,157 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                userTextField(),
-                const SizedBox(
-                  height: 10,
-                ),
-                passwordTextField(),
-                const SizedBox(
-                  height: 10,
-                ),
-                _buttonLogin()
+                Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white60,
+                              width: 2,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextFormField(
+                            controller: _emailController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Por favor ingrese un Email';
+                              }
+                              return null;
+                            },
+                            style: GoogleFonts.robotoSlab(
+                                color: Colors.white70,
+                                textStyle:
+                                    Theme.of(context).textTheme.subtitle1),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                                icon: const Icon(Icons.email,
+                                    color: Colors.white),
+                                labelStyle: GoogleFonts.robotoSlab(
+                                    color: Colors.white,
+                                    textStyle:
+                                        Theme.of(context).textTheme.subtitle1),
+                                labelText: 'Correo Electrónico'),
+                            onChanged: (value) {},
+                          )),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white60,
+                              width: 2,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextFormField(
+                            controller: _passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Por favor ingrese un Email';
+                              }
+                              return null;
+                            },
+                            style: GoogleFonts.robotoSlab(
+                                color: Colors.white70,
+                                textStyle:
+                                    Theme.of(context).textTheme.subtitle1),
+                            keyboardType: TextInputType.emailAddress,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                icon: const Icon(Icons.lock_outlined,
+                                    color: Colors.white),
+                                labelStyle: GoogleFonts.robotoSlab(
+                                    color: Colors.white,
+                                    textStyle:
+                                        Theme.of(context).textTheme.subtitle1),
+                                labelText: 'Contraseña'),
+                            onChanged: (value) {},
+                          )),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _loginUser(_emailController.text,
+                                _passwordController.text, context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Ingrese los campos')),
+                            );
+                          }
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shadowColor:
+                                MaterialStateProperty.all<Color>(Colors.cyan)),
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 80.0, vertical: 15.0),
+                            child: const Text('Iniciar Sesión')),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'No tienes cuenta? ',
+                            style: GoogleFonts.robotoSlab(
+                                fontSize: 12.0,
+                                color: Colors.white,
+                                textStyle:
+                                    Theme.of(context).textTheme.subtitle1),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const UserWidget(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Registrate',
+                                style: GoogleFonts.robotoSlab(
+                                    color: Colors.cyan,
+                                    textStyle:
+                                        Theme.of(context).textTheme.subtitle1),
+                              ))
+                        ],
+                      )
+                    ]))
               ],
             ))));
   }
 
-  Widget userTextField() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.cyan,
-              width: 2,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
+  void _loginUser(String email, String password, BuildContext context) async {
+    UserProvider _userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    try {
+      if (await _userProvider.loginUser(email, password)) {
+        setState(() {});
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: TextField(
-            style: GoogleFonts.robotoSlab(
-                color: Colors.white70,
-                textStyle: Theme.of(context).textTheme.subtitle1),
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-                icon: const Icon(Icons.email, color: Colors.white),
-                labelStyle: GoogleFonts.robotoSlab(
-                    color: Colors.white,
-                    textStyle: Theme.of(context).textTheme.subtitle1),
-                labelText: 'Correo Electrónico'),
-            onChanged: (value) {},
-          ));
-    });
-  }
-
-  Widget passwordTextField() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.cyan,
-              width: 2,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: TextField(
-            style: GoogleFonts.robotoSlab(
-                color: Colors.white70,
-                textStyle: Theme.of(context).textTheme.subtitle1),
-            keyboardType: TextInputType.emailAddress,
-            obscureText: true,
-            decoration: InputDecoration(
-                icon: const Icon(Icons.password, color: Colors.white),
-                labelStyle: GoogleFonts.robotoSlab(
-                    color: Colors.white,
-                    textStyle: Theme.of(context).textTheme.subtitle1),
-                labelText: 'Contraseña'),
-            onChanged: (value) {},
-          ));
-    });
-  }
-
-  Widget _buttonLogin() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return ElevatedButton(
-        onPressed: () {},
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            shadowColor: MaterialStateProperty.all<Color>(Colors.cyan)),
-        child: Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-            child: const Text('Iniciar Sesión')),
-      );
-    });
+        );
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 }
