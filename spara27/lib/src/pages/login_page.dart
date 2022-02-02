@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:spara27/src/bloc/validator_bloc.dart';
 import 'package:spara27/src/pages/home_page.dart';
 import 'package:spara27/src/pages/user_widget.dart';
-import 'package:spara27/src/providers/user_provider.dart';
+import 'package:spara27/src/providers/main_provider.dart';
+import 'package:spara27/src/services/user_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  Validator validator = Validator();
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextFormField(
                             controller: _emailController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Por favor ingrese un Email';
-                              }
-                              return null;
-                            },
+                            validator: validator.emailValidation,
                             style: GoogleFonts.robotoSlab(
                                 color: Colors.white70,
                                 textStyle:
@@ -96,12 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextFormField(
                             controller: _passwordController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Por favor ingrese un Email';
-                              }
-                              return null;
-                            },
+                            validator: validator.passwordValidation,
                             style: GoogleFonts.robotoSlab(
                                 color: Colors.white70,
                                 textStyle:
@@ -180,10 +173,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _loginUser(String email, String password, BuildContext context) async {
-    UserProvider _userProvider =
-        Provider.of<UserProvider>(context, listen: false);
+    UserService _userService = UserService();
+
     try {
-      if (await _userProvider.loginUser(email, password)) {
+      final mainProvider = Provider.of<MainProvider>(context, listen: false);
+
+      if (await _userService.loginUser(email, password)) {
+        var uid = _userService.getUid!;
+        mainProvider.token = uid;
+        mainProvider.email = email;
         setState(() {});
         Navigator.of(context).push(
           MaterialPageRoute(

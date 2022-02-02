@@ -49,7 +49,7 @@ class AppTheme {
           onSecondary: sparaGreen100,
           onSurface: sparaGreen300,
           onError: sparaErrorRed,
-          brightness: ligthMode ? Brightness.light : Brightness.dark),
+          brightness: ligthMode ? Brightness.dark : Brightness.light),
     );
   }
 }

@@ -5,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:spara27/src/models/cliente_model.dart';
+import 'package:spara27/src/models/cuenta_model.dart';
 import 'package:spara27/src/pages/login_page.dart';
-import 'package:spara27/src/providers/user_provider.dart';
+import 'package:spara27/src/providers/main_provider.dart';
 import 'package:spara27/src/services/cliente_service.dart';
+import 'package:spara27/src/services/cuenta_service.dart';
 import 'package:spara27/src/services/imagen_service.dart';
 
 class UserForm extends StatefulWidget {
@@ -18,12 +20,20 @@ class UserForm extends StatefulWidget {
 }
 
 class _UserFormState extends State<UserForm> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _lastnameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
+  late Usuario usuario;
+
   final FotosService _fotosService = FotosService();
+  final ClienteService _clienteService = ClienteService();
+  final CuentaService _cuentaService = CuentaService();
+
   File? image;
   String urlImagen = "";
+  @override
+  void initState() {
+    super.initState();
+    usuario = Usuario.created();
+  }
+
   Future _selectImage(ImageSource source) async {
     try {
       final imageCamera = await ImagePicker().pickImage(source: source);
@@ -42,10 +52,9 @@ class _UserFormState extends State<UserForm> {
 
   @override
   Widget build(BuildContext context) {
-    final UserProvider _userProvider =
-        Provider.of<UserProvider>(context, listen: true);
     final _formKey = GlobalKey<FormState>();
-    final ClienteService _clienteService = ClienteService();
+    final mainProvider = Provider.of<MainProvider>(context);
+
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -99,14 +108,20 @@ class _UserFormState extends State<UserForm> {
                               ),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  Usuario user = Usuario(
-                                      nombre: _nameController.text,
-                                      uid: _userProvider.getUid,
-                                      apellido: _lastnameController.text,
-                                      email: _userProvider.getEmail,
-                                      edad: _ageController.text,
+                                  _formKey.currentState!.save();
+                                  usuario = Usuario(
+                                      nombre: usuario.nombre,
+                                      apellido: usuario.apellido,
+                                      edad: usuario.edad,
+                                      uid: mainProvider.token,
+                                      email: mainProvider.email,
                                       urlImage: urlImagen);
-                                  _clienteService.sendToServer(user);
+                                  _clienteService.sendToServer(usuario);
+                                  Cuenta cuenta = Cuenta(
+                                      uid: mainProvider.token,
+                                      saldo: 0,
+                                      saldoAhorro: 0);
+                                  _cuentaService.sendToServer(cuenta);
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => const LoginPage(),
@@ -179,7 +194,13 @@ class _UserFormState extends State<UserForm> {
                           ],
                         ),
                         TextFormField(
-                          controller: _nameController,
+                          initialValue: usuario.nombre,
+                          style: GoogleFonts.robotoSlab(
+                              color: Theme.of(context).primaryColorDark,
+                              textStyle: Theme.of(context).textTheme.subtitle1),
+                          onSaved: (value) {
+                            usuario.nombre = value.toString();
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Por favor ingrese un Nombre';
@@ -189,17 +210,20 @@ class _UserFormState extends State<UserForm> {
                           decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.person_outline,
                                   color: Colors.cyan),
-                              hintText: 'Nombre',
-                              hintStyle: GoogleFonts.robotoSlab(
+                              labelText: 'Nombre',
+                              labelStyle: GoogleFonts.robotoSlab(
                                   color: Theme.of(context).primaryColorDark,
                                   textStyle:
                                       Theme.of(context).textTheme.subtitle1)),
                         ),
                         TextFormField(
+                          initialValue: usuario.apellido,
                           style: GoogleFonts.robotoSlab(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).primaryColorDark,
                               textStyle: Theme.of(context).textTheme.subtitle1),
-                          controller: _lastnameController,
+                          onSaved: (value) {
+                            usuario.apellido = value.toString();
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Por favor ingrese un Apellido';
@@ -209,18 +233,21 @@ class _UserFormState extends State<UserForm> {
                           decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.person_outline,
                                   color: Colors.cyan),
-                              hintText: 'Apellido',
-                              hintStyle: GoogleFonts.robotoSlab(
+                              labelText: 'Apellido',
+                              labelStyle: GoogleFonts.robotoSlab(
                                   color: Theme.of(context).primaryColorDark,
                                   textStyle:
                                       Theme.of(context).textTheme.subtitle1)),
                         ),
                         TextFormField(
                           keyboardType: TextInputType.number,
+                          initialValue: usuario.edad,
                           style: GoogleFonts.robotoSlab(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).primaryColorDark,
                               textStyle: Theme.of(context).textTheme.subtitle1),
-                          controller: _ageController,
+                          onSaved: (value) {
+                            usuario.edad = value.toString();
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Ingrese la Edad';
@@ -230,8 +257,8 @@ class _UserFormState extends State<UserForm> {
                           decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.child_care_outlined,
                                   color: Colors.cyan),
-                              hintText: 'Edad',
-                              hintStyle: GoogleFonts.robotoSlab(
+                              labelText: 'Edad',
+                              labelStyle: GoogleFonts.robotoSlab(
                                   color: Theme.of(context).primaryColorDark,
                                   textStyle:
                                       Theme.of(context).textTheme.subtitle1)),

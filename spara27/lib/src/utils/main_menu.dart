@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spara27/src/widgets/ahorro_widget.dart';
 import 'package:spara27/src/widgets/inicio_widget.dart';
 import 'package:spara27/src/widgets/movimientos_widget.dart';
-import 'package:spara27/src/widgets/perfil_widget.dart';
+import 'package:spara27/src/widgets/settings_widget.dart';
 
 class MenuItem {
   String label;
@@ -15,12 +15,12 @@ List<MenuItem> menuOptions = [
   MenuItem('Movimientos', Icons.multiple_stop),
   MenuItem('', Icons.add),
   MenuItem('Ahorro', Icons.savings),
-  MenuItem('Perfil', Icons.person)
+  MenuItem('Perfil', Icons.settings)
 ];
 
 List<Widget> contentWidgets = [
   const InicioWidget(),
   const MovimientosWidget(),
   const AhorroWidget(),
-  const PerfilWidget()
+  const SettingsWisget()
 ];

@@ -18,7 +18,7 @@ class MovimientosCard extends StatelessWidget {
         child: ListTile(
           leading: tipo,
           title: Text((model.descripcion ?? "")),
-          subtitle: Text(model.tipoMovimiento ?? ""),
+          //subtitle: Text(model.tipoMovimiento ?? ""),
           trailing: Text(
               model.tipoMovimiento! == "Egreso"
                   ? "- " + model.monto.toString()
@@ -27,7 +27,7 @@ class MovimientosCard extends StatelessWidget {
                   color: model.tipoMovimiento! == "Egreso"
                       ? AppTheme.colorHighPriority
                       : AppTheme.colorLowPriority,
-                  fontSize: 15.0,
+                  fontSize: 18.0,
                   textStyle: Theme.of(context).textTheme.headline5)),
         ));
   }

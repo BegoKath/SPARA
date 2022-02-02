@@ -10,33 +10,36 @@ Movimiento movimientoFromJson(String str) =>
 String movimientoToJson(Movimiento data) => json.encode(data.toJson());
 
 class Movimiento {
-  Movimiento({
-    this.idMovimiento,
-    this.monto,
-    this.descripcion,
-    this.fechaInicio,
-    this.tipoMovimiento,
-  });
+  Movimiento(
+      {this.uid,
+      this.monto,
+      this.descripcion,
+      this.fechaInicio,
+      this.tipoMovimiento,
+      this.categoria});
 
-  String? idMovimiento;
+  String? uid;
   int? monto;
   String? descripcion;
-  String? fechaInicio;
+  DateTime? fechaInicio;
   String? tipoMovimiento;
+  int? categoria;
 
   factory Movimiento.fromJson(Map<String, dynamic> json) => Movimiento(
-        idMovimiento: json["idMovimiento"],
+        uid: json["uid"],
         monto: json["monto"],
         descripcion: json["descripcion"],
-        fechaInicio: json["fechaInicio"],
+        fechaInicio: DateTime.parse(json["fechaInicio"]),
         tipoMovimiento: json["tipoMovimiento"],
+        categoria: json["categoria"],
       );
 
   Map<String, dynamic> toJson() => {
-        "idMovimiento": idMovimiento,
+        "uid": uid,
         "monto": monto,
         "descripcion": descripcion,
-        "fechaInicio": fechaInicio,
+        "fechaInicio": fechaInicio!.toIso8601String(),
         "tipoMovimiento": tipoMovimiento,
+        "categoria": categoria
       };
 }

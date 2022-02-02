@@ -30,7 +30,8 @@ class Usuario {
         uid: json["uid"],
         urlImage: json["urlImage"],
       );
-
+  factory Usuario.created() => Usuario(
+      apellido: "", edad: "", email: "", nombre: "", uid: "", urlImage: "");
   Map<String, dynamic> toJson() => {
         "apellido": apellido,
         "edad": edad,

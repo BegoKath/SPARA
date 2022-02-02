@@ -10,7 +10,7 @@ class AhorroCard extends StatelessWidget {
     return Card(
       elevation: 7,
       child: ListTile(
-          leading: Text(" Saldo " + model.metaAhorro.toString()),
+          leading: const Text(" Saldo "),
           title: Text(model.descripcion ?? ""),
           subtitle: Text(model.fechaInicio ?? ""),
           trailing: const Icon(Icons.money)),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:spara27/src/providers/user_provider.dart';
 import 'package:spara27/src/pages/user_form.dart';
+import 'package:spara27/src/providers/main_provider.dart';
+import 'package:spara27/src/services/user_service.dart';
 
 class UserWidget extends StatefulWidget {
   const UserWidget({Key? key}) : super(key: key);
@@ -140,11 +141,14 @@ class _UserWidgetState extends State<UserWidget> {
   }
 
   void _signUpUser(String email, String password, BuildContext context) async {
-    UserProvider _userProvider =
-        Provider.of<UserProvider>(context, listen: false);
+    UserService _userService = UserService();
 
     try {
-      if (await _userProvider.signUpUser(email, password)) {
+      final mainProvider = Provider.of<MainProvider>(context, listen: false);
+      if (await _userService.signUpUser(email, password)) {
+        var uid = _userService.getUid!;
+        mainProvider.token = uid;
+        mainProvider.email = email;
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => const UserForm(),

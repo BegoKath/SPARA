@@ -1,8 +1,10 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'package:spara27/src/models/movimiento_model.dart';
+import 'package:spara27/src/providers/main_provider.dart';
 import 'package:spara27/src/services/movimiento_service.dart';
 import 'package:spara27/src/widgets/movimientos_card.dart';
 
@@ -30,7 +32,24 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return listaMovimientosWidget();
+    return Container(
+        margin: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 14.0),
+        child: Column(
+          children: [
+            calendario(),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                "Ultimos Movimientos",
+                textAlign: TextAlign.justify,
+                style: GoogleFonts.robotoSlab(
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.headline6),
+              ),
+            ),
+            listaMovimientosWidget(),
+          ],
+        ));
   }
 
   Widget listaMovimientosWidget() {
@@ -41,32 +60,37 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
                 width: 50.0,
                 child: CircularProgressIndicator(color: Colors.white)))
         : _listaMovimientos!.isEmpty
-            ? const Center(
+            ? Center(
                 child: SizedBox(
-                    child: Text("No Hay Infomacion en los Servidores")))
-            : Container(
-                margin: const EdgeInsets.symmetric(
-                    vertical: 25.0, horizontal: 14.0),
-                child: Column(children: [
-                  calendario(),
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      "Ultimos Movimientos",
-                      textAlign: TextAlign.justify,
-                      style: GoogleFonts.robotoSlab(
-                          color: Colors.white,
-                          textStyle: Theme.of(context).textTheme.headline6),
-                    ),
+                    child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 40,
                   ),
-                  Expanded(
-                    child: ListView(
-                      children: _listaMovimientos!
-                          .map((e) => MovimientosCard(model: e))
-                          .toList(),
-                    ),
-                  )
-                ]));
+                  Image.network(
+                    "https://res.cloudinary.com/dvpl8qsgd/image/upload/v1643813878/SPARA/pngwing.com_gr0awq.png",
+                    width: 120,
+                    height: 120,
+                  ),
+                  Text("No tienes movimientos",
+                      style: GoogleFonts.robotoSlab(
+                          color: Colors.cyan.shade400,
+                          textStyle: Theme.of(context).textTheme.bodyText2)),
+                  Text("Agregue sus movimientos usando el boton (+)",
+                      style: GoogleFonts.robotoSlab(
+                          fontSize: 10,
+                          color: Colors.white,
+                          textStyle: Theme.of(context).textTheme.bodyText2))
+                ],
+              )))
+            : Expanded(
+                child: ListView(
+                  children: _listaMovimientos!
+                      .map((e) => MovimientosCard(model: e))
+                      .toList(),
+                ),
+              );
   }
 
   Widget calendario() {
@@ -76,11 +100,12 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: CalendarTimeline(
           initialDate: _selectedDate,
-          firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
+          firstDate: DateTime(2021),
+          lastDate: DateTime.now().add(const Duration(days: 30)),
           onDateSelected: (date) {
             setState(() {
               _selectedDate = date!;
+              _downloadMantenimientos();
             });
           },
           leftMargin: 10,
@@ -93,7 +118,9 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
   }
 
   _downloadMantenimientos() async {
-    _listaMovimientos = await _ahorroService.getAhorros();
+    final mainProvider = Provider.of<MainProvider>(context, listen: false);
+    _listaMovimientos = await _ahorroService.getMovimientos(
+        mainProvider.token, _selectedDate.toIso8601String());
     if (mounted) {
       setState(() {});
     }
