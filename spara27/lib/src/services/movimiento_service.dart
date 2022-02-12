@@ -1,33 +1,11 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:spara27/src/models/movimiento_model.dart';
 
 class MovimientoService {
   MovimientoService();
-  final String _rootUrl = "https://spara-backend.web.app/api/movimiento";
-  Future<List<Movimiento>> getAhorros() async {
-    List<Movimiento> result = [];
-    try {
-      var url = Uri.parse(_rootUrl);
-      final response = await http.get(url);
-      if (response.body.isEmpty) return result;
-      List<dynamic> listBody = json.decode(response.body);
-      for (var item in listBody) {
-        final ahorro = Movimiento.fromJson(item);
-        result.add(ahorro);
-      }
-      return result;
-    } catch (ex) {
-      return result;
-    }
-  }
 
   Future<List<Movimiento>> getMovimientos(String uid, String fecha) async {
     List<Movimiento> resultado = [];
-
     try {
       final result = await Future.value(FirebaseFirestore.instance
           .collection("movimiento")
@@ -41,6 +19,22 @@ class MovimientoService {
         final movimiento = Movimiento.fromJson(us);
         resultado.add(movimiento);
       }
+      return resultado;
+    } catch (e) {
+      return resultado;
+    }
+  }
+
+  Future<int> getMovimientosCategoria(String uid, int categoria) async {
+    int resultado = 0;
+    try {
+      final result = await Future.value(FirebaseFirestore.instance
+          .collection("movimiento")
+          .where("uid", isEqualTo: uid)
+          .where("categoria", isEqualTo: categoria)
+          .get());
+      resultado = result.docs.length;
+
       return resultado;
     } catch (e) {
       return resultado;

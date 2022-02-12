@@ -19,7 +19,7 @@ class Movimiento {
       this.categoria});
 
   String? uid;
-  int? monto;
+  double? monto;
   String? descripcion;
   DateTime? fechaInicio;
   String? tipoMovimiento;
@@ -27,13 +27,19 @@ class Movimiento {
 
   factory Movimiento.fromJson(Map<String, dynamic> json) => Movimiento(
         uid: json["uid"],
-        monto: json["monto"],
+        monto: json["monto"].toDouble(),
         descripcion: json["descripcion"],
         fechaInicio: DateTime.parse(json["fechaInicio"]),
         tipoMovimiento: json["tipoMovimiento"],
         categoria: json["categoria"],
       );
-
+  factory Movimiento.created() => Movimiento(
+      uid: "",
+      monto: 0.0,
+      descripcion: "",
+      fechaInicio: DateTime.now(),
+      tipoMovimiento: "",
+      categoria: 0);
   Map<String, dynamic> toJson() => {
         "uid": uid,
         "monto": monto,

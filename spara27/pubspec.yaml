@@ -48,6 +48,9 @@ dependencies:
   cloudinary_public: ^0.11.0
   jwt_decoder: ^2.0.1
   rxdart: ^0.27.3
+  flutter_datetime_picker:
+    git: https://github.com/Realank/flutter_datetime_picker.git
+  fl_chart: ^0.41.0
 
 dev_dependencies:
   flutter_test:

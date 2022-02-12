@@ -21,7 +21,6 @@ class _PerfilPageState extends State<PerfilPage> {
 
   late Usuario usuario;
   File? image;
-  String urlImagen = "";
 
   @override
   void initState() {
@@ -37,7 +36,7 @@ class _PerfilPageState extends State<PerfilPage> {
       final imageTemporary = File(imageCamera.path);
       image = imageTemporary;
       if (image != null) {
-        urlImagen = await _fotosService.uploadImage(image!);
+        usuario.urlImage = await _fotosService.uploadImage(image!);
       }
     } on Exception {
       // print('Fallo al escoger una imagen: $e');
@@ -49,8 +48,6 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    urlImagen = usuario.urlImage!;
-
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -119,10 +116,11 @@ class _PerfilPageState extends State<PerfilPage> {
                                             apellido: usuario.apellido,
                                             email: usuario.email,
                                             edad: usuario.edad,
-                                            urlImage: urlImagen,
+                                            urlImage: usuario.urlImage,
                                             idD: usuario.idD);
                                         _clienteService.updateToServer(user);
                                         Navigator.pop(context);
+                                        setState(() {});
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
@@ -159,7 +157,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 size: const Size(
                                     150, 150), // button width and height
                                 child: ClipOval(
-                                  child: urlImagen.isEmpty
+                                  child: usuario.urlImage!.isEmpty
                                       ? Material(
                                           color: Colors.cyan, // button color
                                           child: InkWell(
@@ -178,7 +176,9 @@ class _PerfilPageState extends State<PerfilPage> {
                                             ),
                                           ),
                                         )
-                                      : Image(image: NetworkImage(urlImagen)),
+                                      : Image(
+                                          image:
+                                              NetworkImage(usuario.urlImage!)),
                                 ),
                               ),
                               Row(

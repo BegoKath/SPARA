@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:spara27/src/pages/movimiento_page.dart';
 import 'package:spara27/src/utils/main_menu.dart';
 import 'package:spara27/src/providers/main_provider.dart';
 
@@ -71,7 +73,10 @@ class _HomePageState extends State<HomePage> {
                         child: Icon(Icons.add, color: Colors.cyan.shade800),
                         elevation: 0.1,
                         splashColor: Colors.cyan.shade800,
-                        onPressed: () {}),
+                        focusColor: Colors.cyan.shade800,
+                        onPressed: () {
+                          opciones(context);
+                        }),
                   ),
                   SizedBox(
                     width: size.width,
@@ -174,4 +179,74 @@ class BNBCustomPainter extends CustomPainter {
 @override
 Widget build(BuildContext context) {
   throw UnimplementedError();
+}
+
+void opciones(context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final Size size = MediaQuery.of(context).size;
+        return Stack(children: [
+          Positioned(
+            bottom: 90,
+            left: size.width / 8,
+            child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const MovimientoPage(tipo: true),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.arrow_circle_up_outlined,
+                    color: Colors.greenAccent.shade700),
+                backgroundColor: Theme.of(context).secondaryHeaderColor,
+                label: Text(
+                  "Ingreso",
+                  style: GoogleFonts.lora(
+                      color: Colors.green,
+                      fontSize: 15,
+                      textStyle: Theme.of(context).textTheme.bodyText1),
+                )),
+          ),
+          Positioned(
+            bottom: 90,
+            right: size.width / 8,
+            child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const MovimientoPage(tipo: false),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.arrow_circle_down_outlined,
+                    color: Colors.redAccent.shade700),
+                backgroundColor: Theme.of(context).secondaryHeaderColor,
+                label: Text(
+                  "Egreso",
+                  style: GoogleFonts.lora(
+                      color: Colors.red,
+                      fontSize: 15,
+                      textStyle: Theme.of(context).textTheme.bodyText1),
+                )),
+          ),
+          Positioned(
+            bottom: 150,
+            left: size.width / 3,
+            child: FloatingActionButton.extended(
+                onPressed: () {},
+                icon: Icon(Icons.savings_outlined,
+                    color: Colors.orangeAccent.shade700),
+                backgroundColor: Theme.of(context).secondaryHeaderColor,
+                label: Text(
+                  "Ahorro",
+                  style: GoogleFonts.lora(
+                      color: Colors.orange,
+                      fontSize: 15,
+                      textStyle: Theme.of(context).textTheme.bodyText1),
+                )),
+          ),
+        ]);
+      });
 }

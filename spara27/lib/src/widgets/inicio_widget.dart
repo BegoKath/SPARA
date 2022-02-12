@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +7,9 @@ import 'package:spara27/src/models/cuenta_model.dart';
 import 'package:spara27/src/providers/main_provider.dart';
 import 'package:spara27/src/services/cliente_service.dart';
 import 'package:spara27/src/services/cuenta_service.dart';
+import 'package:spara27/src/services/movimiento_service.dart';
+import 'package:spara27/src/utils/main_menu.dart';
 
-// ignore: must_be_immutable
 class InicioWidget extends StatefulWidget {
   const InicioWidget({Key? key}) : super(key: key);
   @override
@@ -17,15 +19,20 @@ class InicioWidget extends StatefulWidget {
 class _InicioWidgetState extends State<InicioWidget> {
   final ClienteService _clienteService = ClienteService();
   final CuentaService _cuentaService = CuentaService();
+
+  final MovimientoService _movimientoService = MovimientoService();
   late Usuario user;
   late Cuenta cuenta;
+  int touchedIndex = -1;
+  List<Task> data = [];
 
   @override
   void initState() {
-    super.initState();
     user = Usuario.created();
     cuenta = Cuenta.created();
     cargaDatos(context);
+    listaCategoria();
+    super.initState();
   }
 
   @override
@@ -77,12 +84,100 @@ class _InicioWidgetState extends State<InicioWidget> {
                                           .textTheme
                                           .headline5)),
                             ]))),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    //const HomeCard(),
                   ],
-                ))
+                )),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: size.width - 10,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Theme.of(context).secondaryHeaderColor),
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Movimientos por Categoria",
+                          style: GoogleFonts.robotoSlab(
+                              fontSize: 20.0,
+                              textStyle:
+                                  Theme.of(context).textTheme.headline5)),
+                    ),
+                    data.isEmpty
+                        ? const Center(
+                            child: SizedBox(
+                                height: 50.0,
+                                width: 50.0,
+                                child: CircularProgressIndicator(
+                                    color: Colors.white)))
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: data
+                                    .map((e) => Row(
+                                          children: <Widget>[
+                                            Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              width: 10,
+                                              height: 10,
+                                              decoration: BoxDecoration(
+                                                shape: e.cantidad == 0
+                                                    ? BoxShape.rectangle
+                                                    : BoxShape.circle,
+                                                color: e.color,
+                                              ),
+                                            ),
+                                            Text(
+                                              e.categoria,
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.black),
+                                            )
+                                          ],
+                                        ))
+                                    .toList(),
+                              ),
+                              Expanded(
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: PieChart(
+                                    PieChartData(
+                                        /*pieTouchData: PieTouchData(touchCallback:
+                                          (FlTouchEvent event, pieTouchResponse) {
+                                        setState(() {
+                                          if (!event
+                                                  .isInterestedForInteractions ||
+                                              pieTouchResponse == null ||
+                                              pieTouchResponse.touchedSection ==
+                                                  null) {
+                                            touchedIndex = -1;
+                                            return;
+                                          }
+                                          touchedIndex = pieTouchResponse
+                                              .touchedSection!
+                                              .touchedSectionIndex;
+                                        });
+                                      }),*/
+                                        borderData: FlBorderData(
+                                          show: false,
+                                        ),
+                                        sectionsSpace: 0,
+                                        centerSpaceRadius: 50,
+                                        sections: showingSections()),
+                                    swapAnimationDuration:
+                                        const Duration(seconds: 5),
+                                    swapAnimationCurve: Curves.bounceIn,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                  ]),
+                )
               ],
             ),
           );
@@ -99,6 +194,36 @@ class _InicioWidgetState extends State<InicioWidget> {
       }
     } else {
       user = Usuario.created();
+    }
+  }
+
+  List<PieChartSectionData> showingSections() {
+    return data.map((e) {
+      return PieChartSectionData(
+        color: e.color,
+        value: double.parse(e.cantidad.toString()),
+        radius: 50,
+        title: e.cantidad.toString(),
+        badgeWidget: Icon(e.icon),
+        badgePositionPercentageOffset: 1.3,
+        titleStyle: const TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Color(0xffffffff)),
+      );
+    }).toList();
+  }
+
+  listaCategoria() async {
+    final mainProvider = Provider.of<MainProvider>(context, listen: false);
+    for (var value in categorias) {
+      int cantidad = await _movimientoService.getMovimientosCategoria(
+          mainProvider.token, categorias.indexOf(value));
+      Task task = Task(value.nombre, cantidad, value.color, value.icon);
+      data.add(task);
+    }
+    if (mounted) {
+      setState(() {});
     }
   }
 }

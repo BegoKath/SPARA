@@ -45,12 +45,11 @@ class _SettingsWisgetState extends State<SettingsWisget> {
           radius: 120,
           child: ClipOval(
             child: usuario.urlImage!.isEmpty
-                ? Material(
-                    color: Colors.cyan, // button color
+                ? CircleAvatar(
+                    backgroundColor: Colors.cyan,
+                    radius: 120, // button color
                     child: InkWell(
                       splashColor: Colors.blue,
-                      // splash color
-                      // button pressed
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [

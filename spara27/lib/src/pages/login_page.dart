@@ -76,7 +76,6 @@ class _LoginPageState extends State<LoginPage> {
                                     textStyle:
                                         Theme.of(context).textTheme.subtitle1),
                                 labelText: 'Correo Electrónico'),
-                            onChanged: (value) {},
                           )),
                       const SizedBox(
                         height: 10,
@@ -109,7 +108,6 @@ class _LoginPageState extends State<LoginPage> {
                                     textStyle:
                                         Theme.of(context).textTheme.subtitle1),
                                 labelText: 'Contraseña'),
-                            onChanged: (value) {},
                           )),
                       const SizedBox(
                         height: 10,
