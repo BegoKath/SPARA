@@ -49,7 +49,7 @@ class _MovimientosWidgetState extends State<MovimientosWidget> {
             ),
             listaMovimientosWidget(),
             const SizedBox(
-              height: 45,
+              height: 55,
             )
           ],
         ));

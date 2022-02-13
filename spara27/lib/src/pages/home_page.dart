@@ -7,8 +7,6 @@ import 'package:spara27/src/utils/main_menu.dart';
 import 'package:spara27/src/providers/main_provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-//final List<String> _options = ["Inicio", "Movimientos", "Ahorros", "Perfil"];
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -59,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           Positioned(
             bottom: 0,
             left: 0,
-            top: 590,
+            top: 600,
             child: SizedBox(
               width: size.width,
               height: 80,

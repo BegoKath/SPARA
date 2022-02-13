@@ -63,33 +63,85 @@ class _InicioWidgetState extends State<InicioWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(10),
                         width: size.width - 50,
                         decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 5, color: Colors.cyan.shade900),
                             borderRadius: BorderRadius.circular(50.0),
                             color: Theme.of(context).secondaryHeaderColor),
                         child: Center(
                             child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("Saldo",
+                                style: GoogleFonts.robotoSlab(
+                                    fontSize: 20.0,
+                                    color: Colors.cyan,
+                                    textStyle:
+                                        Theme.of(context).textTheme.headline5)),
+                            Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                              const Icon(
-                                Icons.attach_money,
-                                size: 40.0,
-                              ),
-                              Text(cuenta.saldo.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.robotoSlab(
-                                      fontSize: 40.0,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .headline5)),
-                            ]))),
+                                  const Icon(
+                                    Icons.attach_money,
+                                    size: 40.0,
+                                  ),
+                                  Text(cuenta.saldo.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.robotoSlab(
+                                          fontSize: 40.0,
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .headline5)),
+                                ]),
+                          ],
+                        ))),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                        padding: const EdgeInsets.all(10),
+                        width: size.width - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50.0),
+                            border: Border.all(
+                                width: 5, color: Colors.cyan.shade900),
+                            color: Theme.of(context).secondaryHeaderColor),
+                        child: Center(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("Ahorro",
+                                style: GoogleFonts.robotoSlab(
+                                    fontSize: 20.0,
+                                    color: Colors.cyan,
+                                    textStyle:
+                                        Theme.of(context).textTheme.headline5)),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.attach_money,
+                                    size: 40.0,
+                                  ),
+                                  Text(cuenta.saldoAhorro.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.robotoSlab(
+                                          fontSize: 40.0,
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .headline5)),
+                                ]),
+                          ],
+                        ))),
                   ],
                 )),
                 const SizedBox(
                   height: 20,
                 ),
                 Container(
+                  margin: const EdgeInsets.all(10),
                   width: size.width - 10,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.0),
