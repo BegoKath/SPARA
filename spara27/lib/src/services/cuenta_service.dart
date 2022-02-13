@@ -20,8 +20,12 @@ class CuentaService {
     FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
       CollectionReference reference =
           FirebaseFirestore.instance.collection('cuenta');
-      await reference.add(
-          {"uid": usu.uid, "saldo": usu.saldo, "saldoAhorro": usu.saldoAhorro});
+      await reference.add({
+        "uid": usu.uid,
+        "saldo": usu.saldo,
+        "saldoAhorro": usu.saldoAhorro,
+        "metaAhorro": usu.metaAhorro
+      });
     });
   }
 
@@ -29,8 +33,12 @@ class CuentaService {
     FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
       CollectionReference reference =
           FirebaseFirestore.instance.collection('cuenta');
-      await reference.doc(usu.idD).update(
-          {"uid": usu.uid, "saldo": usu.saldo, "saldoAhorro": usu.saldoAhorro});
+      await reference.doc(usu.idD).update({
+        "uid": usu.uid,
+        "saldo": usu.saldo,
+        "saldoAhorro": usu.saldoAhorro,
+        "metaAhorro": usu.metaAhorro
+      });
     });
   }
 }

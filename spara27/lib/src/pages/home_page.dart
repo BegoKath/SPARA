@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:spara27/src/pages/ahorro_page.dart';
 import 'package:spara27/src/pages/movimiento_page.dart';
 import 'package:spara27/src/utils/main_menu.dart';
 import 'package:spara27/src/providers/main_provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 //final List<String> _options = ["Inicio", "Movimientos", "Ahorros", "Perfil"];
 
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    initializeDateFormatting("es_ES");
     super.initState();
   }
 
@@ -235,7 +238,13 @@ void opciones(context) {
             bottom: 150,
             left: size.width / 3,
             child: FloatingActionButton.extended(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const AhorroFormPage(),
+                    ),
+                  );
+                },
                 icon: Icon(Icons.savings_outlined,
                     color: Colors.orangeAccent.shade700),
                 backgroundColor: Theme.of(context).secondaryHeaderColor,

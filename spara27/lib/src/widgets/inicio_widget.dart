@@ -166,11 +166,8 @@ class _InicioWidgetState extends State<InicioWidget> {
                                           show: false,
                                         ),
                                         sectionsSpace: 0,
-                                        centerSpaceRadius: 50,
+                                        centerSpaceRadius: 30,
                                         sections: showingSections()),
-                                    swapAnimationDuration:
-                                        const Duration(seconds: 5),
-                                    swapAnimationCurve: Curves.bounceIn,
                                   ),
                                 ),
                               ),
@@ -202,7 +199,7 @@ class _InicioWidgetState extends State<InicioWidget> {
       return PieChartSectionData(
         color: e.color,
         value: double.parse(e.cantidad.toString()),
-        radius: 50,
+        radius: 60,
         title: e.cantidad.toString(),
         badgeWidget: Icon(e.icon),
         badgePositionPercentageOffset: 1.3,

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UserService {
   String? _uid;
@@ -8,25 +9,25 @@ class UserService {
   String? get getEmail => _email;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<bool> signUpUser(String email, String password) async {
-    bool reval = false;
+  Future<String> signUpUser(String email, String password) async {
+    String reval = "";
     try {
       UserCredential _authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (_authResult.user != null) {
-        reval = true;
         _uid = _auth.currentUser!.uid;
         _email = _auth.currentUser!.email;
       }
+    } on FirebaseAuthException catch (e) {
+      reval = e.code;
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      reval = e.toString();
     }
     return reval;
   }
 
-  Future<bool> loginUser(String email, String password) async {
-    bool reval = false;
+  Future<String> loginUser(String email, String password) async {
+    String reval = "";
 
     try {
       UserCredential _authResult = await _auth.signInWithEmailAndPassword(
@@ -35,11 +36,11 @@ class UserService {
       if (_authResult.user != null) {
         _uid = _authResult.user!.uid;
         _email = _authResult.user!.email;
-        reval = true;
       }
+    } on FirebaseAuthException catch (e) {
+      reval = e.code;
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      reval = e.toString();
     }
     return reval;
   }

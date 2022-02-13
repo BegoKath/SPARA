@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:spara27/src/models/ahorro_model.dart';
-import 'package:spara27/src/models/movimiento_model.dart';
 
 class AhorrosService {
   AhorrosService();
@@ -29,7 +28,7 @@ class AhorrosService {
     }
   }
 
-  Future<void> sendToServer(Movimiento usu) async {
+  Future<void> sendToServer(Ahorro usu) async {
     FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
       CollectionReference reference =
           FirebaseFirestore.instance.collection('ahorro');

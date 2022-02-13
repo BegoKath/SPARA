@@ -15,19 +15,20 @@ class Ahorro {
   String? uid;
   double? monto;
   String? descripcion;
-  String? fechaInicio;
+  DateTime? fechaInicio;
 
   factory Ahorro.fromJson(Map<String, dynamic> json) => Ahorro(
         uid: json["uid"],
         monto: json["monto"].toDouble(),
         descripcion: json["descripcion"],
-        fechaInicio: json["fechaInicio"],
+        fechaInicio: DateTime.parse(json["fechaInicio"]),
       );
-
+  factory Ahorro.created() =>
+      Ahorro(uid: "", monto: 0, descripcion: "", fechaInicio: DateTime.now());
   Map<String, dynamic> toJson() => {
         "uid": uid,
         "monto": monto,
         "descripcion": descripcion,
-        "fechaInicio": fechaInicio,
+        "fechaInicio": fechaInicio!.toIso8601String(),
       };
 }

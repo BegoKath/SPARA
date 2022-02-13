@@ -266,7 +266,9 @@ class _UserWidgetState extends State<UserWidget> {
 
     try {
       final mainProvider = Provider.of<MainProvider>(context, listen: false);
-      if (await _userService.signUpUser(email, password)) {
+      var res = await _userService.signUpUser(email, password);
+      final scaffold = ScaffoldMessenger.of(context);
+      if (res.isEmpty) {
         var uid = _userService.getUid!;
         mainProvider.token = uid;
         mainProvider.email = email;
@@ -278,11 +280,77 @@ class _UserWidgetState extends State<UserWidget> {
             email: email,
             urlImage: urlImagen);
         _clienteService.sendToServer(usuario);
-        Cuenta cuenta = Cuenta(uid: uid, saldo: 0, saldoAhorro: 0);
+        Cuenta cuenta =
+            Cuenta(uid: uid, saldo: 0, saldoAhorro: 0, metaAhorro: 0);
         _cuentaService.sendToServer(cuenta);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => const LoginPage(),
+          ),
+        );
+      } else if (res == "email-already-in-use") {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('El email ya existe, pruebe iniciar sesión.',
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+          ),
+        );
+      } else if (res == "invalid-email") {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('Ingrese un email valido.',
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+          ),
+        );
+      } else if (res == "operation-not-allowed") {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('Esta operación es invalida.',
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+          ),
+        );
+      } else if (res == "weak-password") {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('Contraseña es muy facil, ingrese otra por favor.',
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+          ),
+        );
+      } else {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text(res,
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
           ),
         );
       }

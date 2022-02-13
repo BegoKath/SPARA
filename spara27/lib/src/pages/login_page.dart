@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:spara27/src/bloc/validator_bloc.dart';
@@ -175,8 +176,9 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       final mainProvider = Provider.of<MainProvider>(context, listen: false);
-
-      if (await _userService.loginUser(email, password)) {
+      var res = await _userService.loginUser(email, password);
+      final scaffold = ScaffoldMessenger.of(context);
+      if (res.isEmpty) {
         var uid = _userService.getUid!;
         mainProvider.token = uid;
         mainProvider.email = email;
@@ -184,6 +186,71 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => const HomePage(),
+          ),
+        );
+      } else if (res == "invalid-email") {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('El email es invalido vuelva a ingresar.',
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+          ),
+        );
+      } else if (res == "user-disabled") {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('El usuario a sido deshabilitado.',
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+          ),
+        );
+      } else if (res == "user-not-found") {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('Email no registrado, Vuelva a ingresar.',
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+          ),
+        );
+      } else if (res == "wrong-password") {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('Contraseña incorrecta vuelva a ingresar',
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+          ),
+        );
+      } else {
+        scaffold.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text(res,
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1)),
+            action: SnackBarAction(
+                label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
           ),
         );
       }
