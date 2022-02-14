@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spara27/src/models/cliente_model.dart';
 import 'package:spara27/src/pages/login_page.dart';
+import 'package:spara27/src/pages/map_page.dart';
 import 'package:spara27/src/pages/updateperfil_page.dart';
 import 'package:spara27/src/providers/main_provider.dart';
 import 'package:spara27/src/services/cliente_service.dart';
@@ -111,6 +112,21 @@ class _SettingsWisgetState extends State<SettingsWisget> {
                   await prefs.setBool("mode", value);
                   setState(() {});
                 }),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.location_on),
+            title: const Text("Ubicación"),
+            trailing: IconButton(
+                tooltip: "Ubicación",
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const MapSample()),
+                  );
+                },
+                icon:
+                    const Icon(Icons.arrow_forward_ios, color: Colors.orange)),
           ),
         ),
         Card(
