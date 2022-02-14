@@ -6,6 +6,7 @@ import 'package:spara27/src/models/movimiento_model.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:spara27/src/pages/home_page.dart';
 import 'package:spara27/src/providers/main_provider.dart';
 import 'package:spara27/src/services/cuenta_service.dart';
 import 'package:spara27/src/services/movimiento_service.dart';
@@ -282,7 +283,11 @@ class _MovimientoPageState extends State<MovimientoPage> {
                                     widget.tipo ? "Ingreso" : "Egreso");
                             _movimientoService.sendToServer(movimiento);
                             saldosCuenta(mainProvider.token);
-                            Navigator.of(context).pop();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const HomePage(),
+                              ),
+                            );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

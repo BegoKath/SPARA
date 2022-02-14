@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:spara27/src/models/ahorro_model.dart';
 import 'package:spara27/src/models/cuenta_model.dart';
+import 'package:spara27/src/pages/home_page.dart';
 import 'package:spara27/src/providers/main_provider.dart';
 import 'package:spara27/src/services/ahorro_service.dart';
 import 'package:spara27/src/services/cuenta_service.dart';
@@ -223,7 +224,12 @@ class _AhorroFormPageState extends State<AhorroFormPage> {
                                       );
                                       _movimientoService.sendToServer(ahorro);
                                       saldosCuenta(mainProvider.token);
-                                      Navigator.of(context).pop();
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomePage(),
+                                        ),
+                                      );
                                     } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
