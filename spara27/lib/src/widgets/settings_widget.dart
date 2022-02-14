@@ -117,7 +117,7 @@ class _SettingsWisgetState extends State<SettingsWisget> {
         Card(
           child: ListTile(
             leading: const Icon(Icons.location_on),
-            title: const Text("Ubicación"),
+            title: const Text("Puntos para Depositos "),
             trailing: IconButton(
                 tooltip: "Ubicación",
                 onPressed: () {

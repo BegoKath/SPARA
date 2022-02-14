@@ -2,7 +2,7 @@
     package="com.example.spara27">
     
    <application
-        android:label="spara27"
+        android:label="Spara"
         android:icon="@mipmap/ic_launcher">
       
         <activity
