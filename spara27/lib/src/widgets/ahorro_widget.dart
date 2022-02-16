@@ -59,7 +59,7 @@ class _AhorroWidgetState extends State<AhorroWidget> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.all(15),

@@ -55,15 +55,16 @@ class _MovimientoPageState extends State<MovimientoPage> {
                     textStyle: Theme.of(context).textTheme.headline5)),
       ),
       body: Container(
-        margin: const EdgeInsets.all(20),
+        margin: const EdgeInsets.only(top: 30),
         decoration: BoxDecoration(
             border: Border.all(
               color: Colors.black,
               width: 2,
             ),
             color: Theme.of(context).secondaryHeaderColor,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(50),
+              topRight: Radius.circular(50),
             )),
         width: size.width,
         height: size.height,
