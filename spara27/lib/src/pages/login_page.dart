@@ -217,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
         scaffold.showSnackBar(
           SnackBar(
             duration: const Duration(seconds: 2),
-            content: Text('Email no registrado, Vuelva a ingresar.',
+            content: Text('Email no registrado, crea una cuenta.',
                 style: GoogleFonts.robotoSlab(
                     fontSize: 12.0,
                     color: Colors.white,
