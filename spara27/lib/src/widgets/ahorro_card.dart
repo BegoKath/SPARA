@@ -17,6 +17,7 @@ class AhorroCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          const Icon(Icons.savings),
           Text(model.descripcion!,
               style: GoogleFonts.robotoSlab(
                 fontSize: 20.0,

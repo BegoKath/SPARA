@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'No tienes cuenta? ',
+                            '¿No tienes cuenta? ',
                             style: GoogleFonts.robotoSlab(
                                 fontSize: 12.0,
                                 color: Colors.white,
@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               },
                               child: Text(
-                                'Registrate',
+                                'Regístrate',
                                 style: GoogleFonts.robotoSlab(
                                     color: Colors.cyan,
                                     textStyle:

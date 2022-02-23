@@ -75,7 +75,7 @@ class MapSampleState extends State<MapSample> {
                   onMapCreated: onMapCreated,
                   initialCameraPosition: CameraPosition(
                       target: LatLng(position.latitude, position.longitude),
-                      zoom: 2.0),
+                      zoom: 3.0),
                 ),
               ),
             ],
